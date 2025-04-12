@@ -1,10 +1,12 @@
 const likeRepo = require('../repository/like-repo');
 const TweetRepo = require('../repository/tweet');
+const commentRepo = require('../repository/comment');
 class LikeService {
 
     constructor() {
         this.repository = new likeRepo();
         this.tweetRepository = new TweetRepo();
+        this.commentrepo = new commentRepo();
     }
 
     async toggleLike(modelName, modelId, userId) {
@@ -14,7 +16,8 @@ class LikeService {
                 var likearray = await this.tweetRepository.find(modelId);
             }
             else if (modelName === 'Comment') {
-                //todo
+                var likearray = await this.commentrepo.get(modelId);
+                console.log(likearray);
             }
             else {
                 throw new Error('Something went Wrong');

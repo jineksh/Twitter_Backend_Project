@@ -2,28 +2,34 @@ const mongoose = require('mongoose');
 
 const tweetSchema = new mongoose.Schema({
 
-    content : {
-        type : String,
-        max : [250 , 'Content must be under 250 chars']
+    content: {
+        type: String,
+        max: [250, 'Content must be under 250 chars']
     },
-    userId : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'User'
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
-    hashtags : [
+    hashtags: [
         {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'Hashtag'
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Hashtag'
         }
     ],
-    likes : [
+    likes: [
         {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'Like'
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Like'
+        }
+    ],
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
         }
     ]
 
-},{timestamps : true});
+}, { timestamps: true });
 
-const Tweet = mongoose.model('Tweet',tweetSchema);
+const Tweet = mongoose.model('Tweet', tweetSchema);
 module.exports = Tweet;
