@@ -16,10 +16,10 @@ class tweetService {
             const tweet = await this.repository.create(data);
             
             var foundhash = await Hashtag.find({ content: { $in: newHash } });
-            foundhash.forEach(tag=>{
+            for (const tag of foundhash) {
                 tag.tweets.push(tweet.id);
-                tag.save();
-            });
+                await tag.save(); 
+            }
             var titleoftags = foundhash.map(tags => tags.content);
             const notfound = newHash.filter(content => !titleoftags.includes(content));
 
@@ -27,14 +27,13 @@ class tweetService {
             notfound.forEach(hash => {
                 hashobj.push(({ content: hash, tweets:[tweet.id] }))
             });
-            const hashtags = await this.hashrepository.create(hashobj);
+            await this.hashrepository.create(hashobj);
             foundhash = await Hashtag.find({ content: { $in: newHash } });
 
             foundhash.forEach(hash=>{
                 tweet.hashtags.push(hash.id);
-                tweet.save();
             })
-           
+            await tweet.save();
             return tweet;
 
         } catch (error) {
