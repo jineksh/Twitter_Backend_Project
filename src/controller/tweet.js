@@ -5,6 +5,7 @@ const create = async(req,res)=>{
 
     try {
         const tweet = await service.create(req.body);
+        console.log(req.body);
         return res.status(StatusCodes.OK).json({
             data : tweet,
             message : 'SuccessFully Upload tweet',
